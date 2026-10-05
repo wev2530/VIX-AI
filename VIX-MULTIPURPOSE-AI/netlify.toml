@@ -1,0 +1,17 @@
+[build]
+  publish = "."
+  # No Netlify Functions in this project — the AI backend is a Supabase Edge Function
+  # (see supabase/functions/chat/), called directly from the browser via supabase-js.
+  # This is a deliberate choice, not an oversight: Netlify's free-tier functions have a hard
+  # 10-second timeout, and the AI model can legitimately take up to ~2 minutes to reply.
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
